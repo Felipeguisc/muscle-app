@@ -7,8 +7,8 @@ import {
   Alert,
   Image,
 } from "react-native";
-import styles from "../estilo";
-import db from "../../Firebase";
+import styles from "./styles";
+import db from "../../../Firebase";
 import {
   collection, doc, getDoc,
 } from 'firebase/firestore';
@@ -56,7 +56,7 @@ export default function TelaPrincipal({ navigation, route }) {
         <Text style={styles.btnText}>CONFIGURAÇÃO</Text>
       </TouchableOpacity>
 
-      <Image style={styles.imageMenu} source={require("../assets/logo-fitness.png")} />
+      <Image style={styles.imageMenu} source={require("../../assets/images/logo.png")} />
 
       <AwesomeAlert
           show={showAlert}

@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import ProgressBar from 'react-native-progress/Bar';
-import styles from "../estilo";
+import styles from "./styles";
 
 function calculaTotalSeries(exercicios) {
   let arraySoma=[...exercicios];

@@ -7,8 +7,8 @@ import {
   Alert,
   TextInput
 } from "react-native";
-import styles from "../estilo";
-import db from "../../Firebase";
+import styles from "./styles";
+import db from "../../../../Firebase";
 import {
   collection, doc, setDoc,
 } from 'firebase/firestore';

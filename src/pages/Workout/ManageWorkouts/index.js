@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import styles from "../estilo";
-import db from "../../Firebase";
+import styles from "./styles";
+import db from "../../../../Firebase";
 import {
   collection, doc, getDocs, updateDoc,
 } from 'firebase/firestore';

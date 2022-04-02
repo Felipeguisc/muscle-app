@@ -8,8 +8,8 @@ import {
   TextInput,
   Image,
 } from "react-native";
-import styles from "../estilo";
-import db from "../../Firebase";
+import styles from "./styles";
+import db from "../../../../Firebase";
 import {
   collection, doc, updateDoc,
 } from 'firebase/firestore';
@@ -34,7 +34,7 @@ export default function TelaConta({ navigation, route }) {
 
       <View style={styles.containerPerfil}>
 
-      <Image style={styles.imagePerfil} source={require("../assets/account.png")} />
+      <Image style={styles.imagePerfil} source={require("../../../assets/images/account.png")} />
         <View style={{marginLeft: 20}}>
           <Text style={styles.contaText}>{data.nome}</Text>
           <Text>{data.login}</Text>

@@ -8,8 +8,8 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import styles from "../estilo";
-import db from "../../Firebase";
+import styles from "./styles";
+import db from "../../../Firebase";
 import {
   collection, getDocs,
 } from 'firebase/firestore';
@@ -27,7 +27,7 @@ export default class TelaInicial extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={styles.image} source={require("../assets/logo-fitness-2.png")} />
+        <Image style={styles.image} source={require("../../assets/images/logo.png")} />
 
         <StatusBar style="auto" />
         <View style={styles.inputView}>
