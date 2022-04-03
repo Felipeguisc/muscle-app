@@ -12,12 +12,15 @@ import db from "../../../../Firebase";
 import {
   collection, doc, getDocs, updateDoc,
 } from 'firebase/firestore';
+import AwesomeAlert from 'react-native-awesome-alerts';
 
 export default function TelaGerenciarTreino({ navigation, route }) {
 
   const data = route.params;
 
   const [renderData, setRenderData] = useState(data[0]);
+
+  const [showAlert, setShowAlert] = useState(false);
 
   const Item = ({ title }) => (
     <View style={styles.btnsView}>
@@ -37,7 +40,7 @@ export default function TelaGerenciarTreino({ navigation, route }) {
   );
 
   return (
-    <View style={styles.containerMenus}>
+    <View style={styles.container}>
 
       <StatusBar style="auto" />
 
@@ -51,16 +54,29 @@ export default function TelaGerenciarTreino({ navigation, route }) {
         />
       </View>
 
-      <TouchableOpacity style={styles.loginBtn}
+      <TouchableOpacity style={styles.btn}
         onPress={() => salvarTreinos()}>
-        <Text style={styles.loginText}>Salvar Treinos</Text>
+        <Text style={styles.btnText}>Salvar Treinos</Text>
       </TouchableOpacity>
+
+      <AwesomeAlert
+        show={showAlert}
+        showProgress={true}
+        title="Carregando..."
+        closeOnTouchOutside={true}
+        closeOnHardwareBackPress={false}
+        showCancelButton={false}
+        showConfirmButton={false}
+        onDismiss={() => {
+          hideAlert();
+        }}
+        style={{ progressSize: "large" }}
+      />
 
     </View>
   );
 
   function onPressHandler(id) {
-    console.log("ON PRESS HANDLER");
     let renderDatas = [...renderData];
     for (let data of renderDatas) {
       console.log("if " + data.id + " = " + id);
@@ -73,7 +89,7 @@ export default function TelaGerenciarTreino({ navigation, route }) {
   };
 
   async function salvarTreinos() {
-    console.log("Entrando salvarTreinos");
+    showAlertButton();
     let renderDatas = [...renderData];
     let arraySalvar = [];
     for (let data of renderDatas) {
@@ -94,4 +110,11 @@ export default function TelaGerenciarTreino({ navigation, route }) {
     }
   };
 
+  function showAlertButton() {
+    setShowAlert(true);
+  };
+
+  function hideAlert() {
+    setShowAlert(false);
+  };
 }

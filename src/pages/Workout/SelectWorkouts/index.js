@@ -24,14 +24,6 @@ export default function TelaEscolherTreino({ navigation, route }) {
 
   const [showAlert, setShowAlert] = useState(false);
 
-  function showAlertButton() {
-    setShowAlert(true);
-  };
-
-  function hideAlert() {
-    setShowAlert(false);
-  };
-
   const Item = ({ title }) => (
     <View style={styles.btnsView}>
       <TouchableOpacity style={styles.genericBtn}
@@ -47,7 +39,7 @@ export default function TelaEscolherTreino({ navigation, route }) {
 
   return (
 
-    <View style={styles.containerMenus}>
+    <View style={styles.container}>
 
       <StatusBar style="auto" />
 
@@ -59,12 +51,10 @@ export default function TelaEscolherTreino({ navigation, route }) {
         />
       </View>
 
-      <View>
-        <TouchableOpacity style={styles.roundButton}
-          onPress={() => carregarTodosTreinos()}>
-          <Text style={{ fontSize: 50 }}>+</Text>
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity style={styles.btn}
+        onPress={() => carregarTodosTreinos()}>
+        <Text style={styles.btnText}>Adicionar novos treinos</Text>
+      </TouchableOpacity>
 
       <AwesomeAlert
         show={showAlert}
@@ -133,7 +123,15 @@ export default function TelaEscolherTreino({ navigation, route }) {
   async function carregarTodosTreinos() {
     showAlertButton();
     await readExercicios(null);
-    navigation.push('TelaGerenciarTreino', new Array ( arrayTodosTreinos, arrayTreinos ));
+    navigation.push('TelaGerenciarTreino', new Array(arrayTodosTreinos, arrayTreinos));
     hideAlert();
   }
+  
+  function showAlertButton() {
+    setShowAlert(true);
+  };
+
+  function hideAlert() {
+    setShowAlert(false);
+  };
 }

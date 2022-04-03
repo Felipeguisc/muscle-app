@@ -11,9 +11,9 @@ import {
 import styles from "./styles";
 import db from "../../../../Firebase";
 import {
-  collection, doc, updateDoc,
+  doc, updateDoc,
 } from 'firebase/firestore';
-import AwesomeAlert from 'react-native-awesome-alerts';
+import { TextInputMask } from 'react-native-masked-text';
 
 
 export default function TelaConta({ navigation, route }) {
@@ -22,10 +22,11 @@ export default function TelaConta({ navigation, route }) {
 
   console.log(data);
 
-  const [idade, setIdade] = useState(data.idade!=undefined ? data.idade.toString() : "");
-  const [altura, setAltura] = useState(data.altura!=undefined ? data.altura.toString() : "cm");
-  const [peso, setPeso] = useState(data.peso!=undefined ? data.peso.toString() : "kg");
-  const [telefone, setTelefone] = useState(data.telefone!=undefined ? data.telefone.toString() : "");
+  const [birthdate, setBirthdate] = useState(data.birthdate != undefined ? data.birthdate.toString() : "");
+  const [altura, setAltura] = useState(data.altura != undefined ? data.altura.toString() : "cm");
+  const [peso, setPeso] = useState(data.peso != undefined ? data.peso.toString() : "kg");
+  const [telefone, setTelefone] = useState(data.telefone != undefined ? data.telefone.toString() : "");
+  const [edit, setEdit] = useState(false);
 
   return (
     <View style={styles.container}>
@@ -34,8 +35,8 @@ export default function TelaConta({ navigation, route }) {
 
       <View style={styles.containerPerfil}>
 
-      <Image style={styles.imagePerfil} source={require("../../../assets/images/account.png")} />
-        <View style={{marginLeft: 20}}>
+        <Image style={styles.imagePerfil} source={require("../../../assets/images/account.png")} />
+        <View style={{ marginLeft: 20 }}>
           <Text style={styles.contaText}>{data.nome}</Text>
           <Text>{data.login}</Text>
         </View>
@@ -43,20 +44,6 @@ export default function TelaConta({ navigation, route }) {
       </View>
 
       <View style={styles.containerInfoPerfil}>
-
-        <Text>Idade</Text>
-        <View style={styles.inputView}>
-
-          <TextInput
-            style={styles.TextInput}
-            keyboardType="numeric"
-            placeholder={idade}
-            placeholderTextColor="#003f5c"
-            onChangeText={(txt) => setIdade(txt)}
-            value={idade}
-            maxLength={2}
-          />
-        </View>
 
         <Text>Altura</Text>
         <View style={styles.inputView}>
@@ -68,6 +55,7 @@ export default function TelaConta({ navigation, route }) {
             onChangeText={(txt) => setAltura(txt)}
             value={altura}
             maxLength={3}
+            editable={edit}
           />
         </View>
 
@@ -81,39 +69,63 @@ export default function TelaConta({ navigation, route }) {
             onChangeText={(txt) => setPeso(txt)}
             value={peso}
             maxLength={3}
+            editable={edit}
           />
         </View>
 
         <Text>Telefone</Text>
         <View style={styles.inputView}>
-          <TextInput
+          <TextInputMask
+            type="cel-phone"
             style={styles.TextInput}
             keyboardType="numeric"
             placeholder={telefone}
             placeholderTextColor="#003f5c"
             onChangeText={(txt) => setTelefone(txt)}
             value={telefone}
-            //mask="([00]) [0] [0000]-[0000]"
+            editable={edit}
+          />
+        </View>
+
+        <Text>Data de nascimento</Text>
+        <View style={styles.inputView}>
+          <TextInputMask
+            type="datetime"
+            options={{
+              format: 'DD/MM/YYYY'
+            }}
+            style={edit ? styles.TextInput : styles.inputEditingView}
+            keyboardType="numeric"
+            placeholder={birthdate}
+            placeholderTextColor="#003f5c"
+            onChangeText={(txt) => setBirthdate(txt)}
+            value={birthdate}
+            editable={edit}
           />
         </View>
 
       </View>
 
-      <TouchableOpacity style={styles.loginBtn}
+      { !edit && 
+      <TouchableOpacity style={styles.btn}
+        onPress={() => editAccount()}>
+        <Text style={styles.btnText}>Editar</Text>
+      </TouchableOpacity>
+      }
+      <TouchableOpacity style={styles.btn}
         onPress={() => salvarConta()}>
-        <Text style={styles.loginText}>Salvar Alterações</Text>
+        <Text style={styles.btnText}>Salvar Alterações</Text>
       </TouchableOpacity>
 
     </View>
   );
 
   async function salvarConta() {
-    console.log("Entrando salvarConta");
     try {
       //Update em campo específico
       const docRef = doc(db, "Usuario", global.user);
-      await updateDoc( docRef, {
-        idade: idade,
+      await updateDoc(docRef, {
+        birthdate: birthdate,
         altura: altura,
         peso: peso,
         telefone: telefone,
@@ -125,5 +137,9 @@ export default function TelaConta({ navigation, route }) {
       Alert.alert("Error: " + error);
     }
   };
+
+  function editAccount() {
+    setEdit(edit ? false : true);
+  }
 
 }

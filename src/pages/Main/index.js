@@ -35,28 +35,33 @@ export default function TelaPrincipal({ navigation, route }) {
   };
 
   return (
-    <View style={styles.containerMenus}>
+    <View style={styles.container}>
 
       <StatusBar style="auto" />
 
       <Text style={styles.title}>Bem vindo, {data.nome}!</Text>
 
-      <TouchableOpacity style={styles.genericBtn}
+      <TouchableOpacity style={styles.btn}
         onPress={() => carregarTreinos()}>
         <Text style={styles.btnText}>TREINOS</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.genericBtn}
+      <TouchableOpacity style={styles.btn}
+        onPress={() => loadDiet()}>
+        <Text style={styles.btnText}>DIETA</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.btn}
         onPress={() => carregarContas()}>
         <Text style={styles.btnText}>CONTA</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.genericBtn}
+      <TouchableOpacity style={styles.btn}
         onPress={() => Alert.alert("Tela não implementada")}>
         <Text style={styles.btnText}>CONFIGURAÇÃO</Text>
       </TouchableOpacity>
 
-      <Image style={styles.imageMenu} source={require("../../assets/images/logo.png")} />
+      <Image style={styles.image} source={require("../../assets/images/logo.png")} />
 
       <AwesomeAlert
           show={showAlert}
@@ -99,6 +104,10 @@ export default function TelaPrincipal({ navigation, route }) {
       await readTreinos(data.treinos);
     hideAlert();
     navigation.push('TelaEscolherTreino', arrayTreinos)
+  }
+
+  async function loadDiet() {
+    Alert.alert("Tela não implementada")
   }
 
   async function readTreinos(treinos) {
